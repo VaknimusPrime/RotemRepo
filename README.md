@@ -1,5 +1,4 @@
-# RotemRepo
-artlist.io home assignment
+# artlist.io home assignment
 
 Instructions: 
 
@@ -9,7 +8,7 @@ Run:
 ```
 kubectl config view | grep server
 ```
-from the result, take the address and add it to the host field on the provider.tf file
+from the result, take the address and add it to the terraform apply command under minikube_host var (Example below)
 
 installing mysql DB.
 ```
@@ -34,10 +33,15 @@ mysql> ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'RootPass';
 ```
 mysql> FLUSH PRIVILEGES;
 ```
-Exit the docker
+Exit the container
 
 
-Running terraform.  Don't forget to add your machine's IP address
+Running terraform.  Don't forget to add your machine's IP address and the minikube_host retrieved above. 
 ```
-terraform apply -var="mysql_host=<your_machine's_IP_address>"
+terraform apply -var="mysql_host=<your_machine's_IP_address>" -var="minikube_host=<minikube_host>"
+```
+
+Example 
+```
+terraform apply -var="mysql_host=10.100.102.7" -var="minikube_host=https://127.0.0.1:58720"
 ```
