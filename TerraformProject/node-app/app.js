@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-  socketPath: '/var/run/mysqld/mysqld.sock',
-  user: 'root',
-  password: 'RotemPass',
-  database: 'test_mysql'
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASS,
+  database: process.env.MYSQL_DB,
+  insecureAuth: true
 });
 
 connection.connect((err) => {
