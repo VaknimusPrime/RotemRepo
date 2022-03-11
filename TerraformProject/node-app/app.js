@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-  host: 'localhost',
+  socketPath: '/var/run/mysqld/mysqld.sock',
   user: 'root',
   password: 'RotemPass',
   database: 'test_mysql'
