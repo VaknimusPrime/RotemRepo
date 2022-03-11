@@ -1,11 +1,11 @@
-resource "kubernetes_deployment" "helloworld" {
+resource "kubernetes_deployment" "connect-to-mysql" {
   metadata {
-    name = "helloworld"
+    name = "connect-to-mysql"
   }
   spec {
     selector {
       match_labels = {
-        "app" = "helloworld"
+        "app" = "connect-to-mysql"
       }
     }
     replicas = 2
@@ -13,13 +13,13 @@ resource "kubernetes_deployment" "helloworld" {
     template {
       metadata {
         labels = {
-          "app" = "helloworld"
+          "app" = "connect-to-mysql"
         }
       }
       spec {
         container {
-          name = "helloworld"
-          image = "docker/getting-started"
+          name = "connect-to-mysql"
+          image = "node-to-mysql"
           port {
             container_port = 80
           }

@@ -1,0 +1,6 @@
+FROM node:16.7-alpine3.12
+WORKDIR /app
+RUN npm install mysql
+COPY node-app/ .
+ENTRYPOINT [ "node", "app.js" ]
+
