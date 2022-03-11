@@ -39,5 +39,5 @@ Exit the docker
 
 Running terraform.  Don't forget to add your machine's IP address
 ```
-terraform apply -var="<your_machine's_IP_address>"
+terraform apply -var="mysql_host=<your_machine's_IP_address>"
 ```
