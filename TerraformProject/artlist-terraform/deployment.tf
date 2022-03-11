@@ -19,7 +19,7 @@ resource "kubernetes_deployment" "connect-to-mysql" {
       spec {
         container {
           name = "connect-to-mysql"
-          image = "node-to-mysql"
+          image = "node-to-mysql:first"
           port {
             container_port = 80
           }
