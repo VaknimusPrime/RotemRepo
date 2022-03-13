@@ -1,10 +1,23 @@
 variable "mysql_host" {
   type        = string
-  description = ""
-  default     = "10.100.102.7"
+  description = "mysql host passed in variable on terraform apply command"
+  default     = ""
+}
+
+module "connect" {
+  source = "./connect"
+
+  host = var.mysql_host
+}
+
+output "connection_values"{
+  value = module.connect.connection_values
 }
 
 resource "kubernetes_deployment" "connect-to-mysql" {
+  depends_on = [
+    null_resource.docker_build_and_publish
+  ]
   metadata {
     name = "connect-to-mysql"
   }
@@ -27,21 +40,21 @@ resource "kubernetes_deployment" "connect-to-mysql" {
           name = "connect-to-mysql"
           env {
             name = "MYSQL_HOST"
-            value = var.mysql_host
+            value = module.connect.connection_values.host
           }
           env {
             name = "MYSQL_USER"
-            value = "root"
+            value = module.connect.connection_values.user
           }
           env {
             name = "MYSQL_PASS"
-            value = "RootPass"
+            value = module.connect.connection_values.pass
           }
           env {
             name = "MYSQL_DB"
-            value = "mysql"
+            value = module.connect.connection_values.db
           }
-          image = "vaknimusprime/node-to-mysql:latest"
+          image = "vaknimusprime/node-to-mysql:v1"
           port {
             container_port = 80
           }
@@ -50,3 +63,4 @@ resource "kubernetes_deployment" "connect-to-mysql" {
     }
   }
 }
+
